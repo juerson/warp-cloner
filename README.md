@@ -1,60 +1,37 @@
 # Warp Cloner
 
-![warp-cloner](https://socialify.git.ci/totoroterror/warp-cloner/image?font=Raleway&language=1&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Light)
+原项目地址：https://github.com/totoroterror/warp-cloner
 
-Simple Python script that can clone [Warp Plus](https://1.1.1.1/) keys.
+该Python脚本，可以克隆大量的 [Warp Plus](https://1.1.1.1/) 密钥。
 
-With this script you will be able to clone many 12-24 PB keys.
+使用此脚本，您将能够克隆更多的12-24 PB密钥。
 
-## Installation
+还能生成 WireGuard 配置文件的信息。
 
-1. Clone this repository
-2. Install [Python 3.11](https://www.python.org/downloads/) or higher
-3. Install dependencies using `pip install -r requirements.txt`
-4. Copy `.env.example` to `.env` and fill variables (see next section)
-5. Launch script using `python -u src/main.py`
-6. Wait for results in console.
+## 安装和使用方法
 
-## Configuration
+1. 克隆此存储库
 
-- `BASE_KEYS` (not required) - keys to clone divided as array in JSON format (ex: `["key1", "key2"]`), if none then default keys will be used (script may not work with default keys)
-- `THREADS_COUNT` (default: `1`) - amount of threads.
-- `DEVICE_MODELS` (not required) - custom device model names divided as array in JSON format (ex: `["Android", "Secret Device"]`)
-- `SAVE_WIREGUARD_VARIABLES` (default: false) - should script get variables that are required to generate WireGuard config (peer ips, private / public key, endpoint)?
-- `PROXY_FILE` (not required) - path to proxy file, if none then script will be launched in proxyless mode.
-- `DELAY` (default: `25`) - seconds to sleep after key clone
-- `OUTPUT_FILE` (default: `output.txt`) - file to append generated keys
-- `OUTPUT_FORMAT` (default: `{key} | {referral_count}`) - output format (if `SAVE_WIREGUARD_VARIABLES` is set to `true`, additinal variables is available: `{private_key}`, `{peer_endpoint}`, `{peer_public_key}`, `{interface_addresses}`)
-- `RETRY_COUNT` (default: 3) - how much times application will retry generation with same key
+2. 安装 [Python 3.11](https://www.python.org/downloads/) 或更高版本的
 
-## Notes
+3. 使用以下命令安装依赖项 `pip install -r requirements.txt`
 
-### Proxy format
+4. 将 `.env.example` 文件，并改名为 `.env` ，选择性添加自己的12-24 PB密钥到BASE_KEYS=[""]中
 
-Proxy format for `PROXY_FILE` is `protocol://user:pass@ip:port`, example: `socks5://example.org:1892` / `http://totoro:warp@example.org`, one proxy per line.
+5. 执行 `python -u src/main.py`命令，生成更多的12-24 PB密钥（在控制台中等待结果）
 
-### Getting your own 12-24 PB keys to fill BASE_KEYS
+   或运行 `第1步：run.bat`文件，生成的结果默认输出到`output.txt`文件中
 
-You can get your own key to start with using [@warpplus's bot](https://t.me/generatewarpplusbot) (limited to 1 key per 24 hours) or find some keys on forums.
+6. 运行 `第2步：Run_Build_WireGuard.bat` 文件（将`output.txt`中的秘钥和其他信息，构建 WireGuard 配置信息），生成的`cloudflare warp+ 的配置文件.md`文件就是你需要的配置文件信息。
 
-### Properly closing application
+# 环境变量(`.env.example`文件)
 
-To avoid getting error "Too many connected devices" in future, you should properly exit from the application by pressing `control` + `c` and wait for application to close (it will take ~30 seconds).
-
-### Proxy selection
-
-You can use almost any proxy (ipv4 / ipv6) as far as they don't block Warp API endpoint. I suggest you to use ipv6 proxy because they are way cheaper, *but keep in mind, that your network should support ipv6 in most cases to do this*.
-
-## Contributing
-
-I will support this project as far as I can, but issues and pull requests are always welcome!
-
-## License
-
-This project licensed under MIT License.
-
-## Support me
-
-You can support my further developments or support this project by buying me a coffee using link below or by starring this repo ♥
-
-[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/totoroterror)
+- `BASE_KEYS` (非必需)-要克隆的许可密钥，用逗号分隔，如果没有，则使用默认key(脚本可能无法使用默认key)
+- `THREADS_COUNT` (默认: `1`) - 线程数量
+- `DEVICE_MODELS` (非必需的) - 自定义设备型号名称，以逗号分隔
+- `SAVE_WIREGUARD_VARIABLES` (默认: false) - 脚本可以获取生成 WireGuard 配置所需的变量吗 ?(peer ips, private / public key, endpoint)
+- `PROXY_FILE` (非必需的) - 代理文件的路径，如果没有，则脚本将以无代理模式启动
+- `DELAY` (默认: `25`) - 密钥克隆后多少秒休眠一下，默认即可
+- `OUTPUT_FILE` (默认: `output.txt`) - 在output.txt文件后面追加，程序新生成的密钥和其它信息
+- `OUTPUT_FORMAT` (默认: `{key} | {referral_count}`) - 输出格式 (如果 `SAVE_WIREGUARD_VARIABLES` 设置为 `true`, 其他可用的变量: `{private_key}`, `{peer_endpoint}`, `{peer_public_key}`, `{interface_addresses}`)
+- `RETRY_COUNT` (默认: 3) - 应用程序将使用相同的密钥重试生成多少次。
